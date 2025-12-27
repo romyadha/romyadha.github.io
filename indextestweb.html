@@ -54,6 +54,7 @@
         photo: 'assets/Bangga-20-Tempat-Wisata-Indonesia-yang-Mendunia-jpg.png',
         price: 'Rp 850.000',
         website: 'https://opentrip.example/raja-ampat-3d',
+        booking: 'https://tiket.com/event/open-trip-raja-ampat-3-hari',
         wa: 'https://wa.me/6281234567890'
       },
       'raja-ampat-2d': {
@@ -62,6 +63,7 @@
         photo: 'assets/tempat-wisata-di-indonesia-2.jpg',
         price: 'Rp 650.000',
         website: 'https://opentrip.example/raja-ampat-2d',
+        booking: 'https://tiket.com/event/open-trip-raja-ampat-2-hari',
         wa: 'https://wa.me/6281234567890'
       },
       'yogyakarta-2d': {
@@ -70,6 +72,7 @@
         photo: 'assets/Traveling Photo.png',
         price: 'Rp 490.000',
         website: 'https://opentrip.example/yogyakarta-2d',
+        booking: 'https://tiket.com/event/open-trip-yogyakarta-2-hari',
         wa: 'https://wa.me/6281234567890'
       }
     };
@@ -103,7 +106,7 @@
       photoEl.src = data.photo;
       photoEl.alt = data.title;
       priceEl.textContent = data.price;
-      external.href = data.website;
+      external.href = data.booking;
       reservasi.href = data.wa;
     }
 

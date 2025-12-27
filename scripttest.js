@@ -1,4 +1,61 @@
 
+// Trip data
+const tripData = {
+  'raja-ampat-3d': {
+    title: 'Papua Barat Daya — Raja Ampat — 3 Hari',
+    desc: 'Foto destinasi, highlight, dan jadwal singkat. Termasuk transportasi dan guide lokal berpengalaman.',
+    photo: 'assets/Bangga-20-Tempat-Wisata-Indonesia-yang-Mendunia-jpg.png',
+    price: 'Rp 850.000',
+    location: 'Raja Ampat, Papua Barat',
+    maps: 'https://www.google.com/maps/search/?api=1&query=Raja+Ampat+Papua+Barat',
+    website: 'https://opentrip.example/raja-ampat-3d',
+    wa: 'https://wa.me/6281234567890'
+  },
+  'raja-ampat-2d': {
+    title: 'Indonesia — Raja Ampat — 2 Hari',
+    desc: 'Termasuk transportasi & guide. Paket singkat untuk eksplorasi spots terbaik.',
+    photo: 'assets/tempat-wisata-di-indonesia-2.jpg',
+    price: 'Rp 650.000',
+    location: 'Raja Ampat, Papua Barat',
+    maps: 'https://www.google.com/maps/search/?api=1&query=Raja+Ampat+Papua+Barat',
+    website: 'https://opentrip.example/raja-ampat-2d',
+    wa: 'https://wa.me/6281234567890'
+  },
+  'yogyakarta-2d': {
+    title: 'Yogyakarta — 2 Hari',
+    desc: 'Kunjungi candi dan wisata kuliner. Cocok untuk keluarga dan teman.',
+    photo: 'assets/Traveling Photo.png',
+    price: 'Rp 490.000',
+    location: 'Yogyakarta, DI Yogyakarta',
+    maps: 'https://www.google.com/maps/search/?api=1&query=Yogyakarta',
+    website: 'https://opentrip.example/yogyakarta-2d',
+    wa: 'https://wa.me/6281234567890'
+  }
+};
+
+// Modal functions
+function openModal(tripId) {
+  const modal = document.getElementById('tripModal');
+  const data = tripData[tripId];
+  if (!data) return;
+  
+  document.getElementById('modalTitle').textContent = data.title;
+  document.getElementById('modalDesc').textContent = data.desc;
+  document.getElementById('modalPhoto').src = data.photo;
+  document.getElementById('modalPrice').textContent = data.price;
+  document.getElementById('modalReservasi').href = data.wa;
+  document.getElementById('modalWebsite').href = data.website;
+  
+  const locationEl = document.getElementById('modalLocation');
+  locationEl.innerHTML = `📍 ${data.location} — <a href="${data.maps}" target="_blank" rel="noopener" aria-label="Lihat di Google Maps">🗺️</a>`;
+  
+  modal.style.display = 'flex';
+}
+
+function closeModal() {
+  document.getElementById('tripModal').style.display = 'none';
+}
+
 // Interactive buttons with ripple effect and feedback
 function initializeButtons() {
   const buttons = document.querySelectorAll('.btn');
@@ -40,7 +97,7 @@ function initializeButtons() {
       const href = this.getAttribute && this.getAttribute('href');
       const target = this.getAttribute && this.getAttribute('target');
       setTimeout(() => {
-        if (!href) return;
+        if (!href || href === '#') return;
         if (href.startsWith('#')) {
           location.hash = href;
         } else if (target === '_blank') {
@@ -102,12 +159,41 @@ document.addEventListener('DOMContentLoaded', function () {
   const form = document.getElementById('feedbackForm');
   const msg = document.getElementById('feedbackMsg');
   const listWrap = document.getElementById('feedbackList');
+  const modal = document.getElementById('tripModal');
+  const modalClose = document.querySelector('.modal-close');
+  const modalBackdrop = document.querySelector('.modal-backdrop');
 
   // Initialize button interactivity
   initializeButtons();
   
   // Initialize trip card clickability
   initializeTripCards();
+
+  // Modal event listeners
+  if (modal) {
+    // Close modal on close button
+    if (modalClose) {
+      modalClose.addEventListener('click', closeModal);
+    }
+    // Close modal on backdrop click
+    if (modalBackdrop) {
+      modalBackdrop.addEventListener('click', closeModal);
+    }
+    // Close modal on Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeModal();
+    });
+  }
+
+  // Detail trigger buttons
+  const detailTriggers = document.querySelectorAll('.btn-detail-trigger');
+  detailTriggers.forEach(trigger => {
+    trigger.addEventListener('click', function(e) {
+      e.preventDefault();
+      const tripId = this.getAttribute('data-trip');
+      if (tripId) openModal(tripId);
+    });
+  });
 
   if (!form) return;
 
