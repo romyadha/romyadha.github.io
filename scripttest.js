@@ -47,8 +47,7 @@ function openModal(tripId) {
   document.getElementById('modalWebsite').href = data.website;
   
   const locationEl = document.getElementById('modalLocation');
-  locationEl.innerHTML = `📍 ${data.location} — <a href="${data.maps}" target="_blank" rel="noopener" aria-label="Lihat di Google Maps">🗺️</a>`;
-  
+      locationEl.innerHTML = `📍 ${data.location} — <a href="${data.maps}" rel="noopener" aria-label="Lihat di Google Maps">🗺️</a>`;
   modal.style.display = 'flex';
 }
 
@@ -95,13 +94,10 @@ function initializeButtons() {
 
       // Manual navigation after a short delay to allow the effect to show
       const href = this.getAttribute && this.getAttribute('href');
-      const target = this.getAttribute && this.getAttribute('target');
       setTimeout(() => {
         if (!href || href === '#') return;
         if (href.startsWith('#')) {
           location.hash = href;
-        } else if (target === '_blank') {
-          window.open(href, '_blank', 'noopener');
         } else {
           location.href = href;
         }
@@ -139,11 +135,9 @@ function initializeTripCards() {
       const websiteLink = this.querySelector('.trip-website');
       if (websiteLink) {
         const href = websiteLink.getAttribute('href');
-        const target = websiteLink.getAttribute('target');
         if (href) {
           setTimeout(() => {
-            if (target === '_blank') window.open(href, '_blank', 'noopener');
-            else location.href = href;
+            location.href = href;
           }, 250);
         }
       } else {
